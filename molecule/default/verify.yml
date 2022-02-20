@@ -1,0 +1,48 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+  - name: Populate service facts
+    ansible.builtin.service_facts:
+
+  - name: Check that you can connect (GET) to a page and it returns a status 200
+    uri:
+      url: http://localhost:5601
+    register: kibana_state
+
+  - name: Assertion
+    assert:
+      that:
+        - kibana_state.status == 200
+        - '"kibana" in ansible_facts.services'
+
+#  - name:
+#    shell: 'curl -I "google.com" 2>&1 | awk "/HTTP\// {print $2}"'
+#    register: kibana_status
+#  - name: checking service status
+#    command: systemctl status kibana
+
+#  - name: test123
+#    debug:
+#      var: services_state
+#      var: kibana_status
+#      var: site_state
+#      var: site_state_2.status
+##      msg: kibana installed!
+##    when: "'kibana' in services"
+##  - debug:
+
+#  - name: Download foo.conf
+#    get_url:
+#      url: http://google.com
+#      dest: /etc/foo.conf
+#    register: site_state
+
+#  - name: Print service facts
+#    ansible.builtin.debug:
+#      var: ansible_facts.services
+
