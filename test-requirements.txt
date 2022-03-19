@@ -1,7 +1,5 @@
 molecule==3.4.0
 molecule_docker
-molecule_podman
-podman
 docker
 ansible-lint
 yamllint
